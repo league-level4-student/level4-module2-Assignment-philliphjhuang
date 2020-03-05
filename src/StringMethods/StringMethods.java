@@ -32,13 +32,25 @@ public class StringMethods {
 
 	// Given Strings s1 and s2, return the longer String
 	public static String longerString(String s1, String s2) {
-		return null;
+		if(s1.length()>s2.length()) {
+			return s1;
+		} else if(s2.length()>s1.length()) {
+			return s2;
+		}
+		return "equal";
 	}
 
 	
 	// if String s contains the word "underscores", change all of the spaces to underscores
 	public static String formatSpaces(String s) {
-		return null;
+		if(s.contains("underscores")) {
+			for(int i = 0; i < s.length(); i++) {
+				if(s.charAt(i)==' ') {
+					s = s.substring(0, i) + "_" + s.substring(i+1,s.length());
+				}
+			}
+		}
+		return s;
 	}
 
 	
@@ -46,7 +58,58 @@ public class StringMethods {
 	// You cannot assume there are no extra spaces around the name, but you can
 	// assume there is only one space between the first and last name
 	public static String lineLeader(String s1, String s2, String s3) {
-		return null;
+		char one = ' ';
+		char two = ' ';
+		char three = ' ';
+		
+		s1 = s1.trim();
+		for(int i = 0; i < s1.length(); i++) {
+			for(int j = s1.length()-1; j > 0; j++) {
+				if(s1.charAt(i)!=' ' && s1.charAt(j)!=' ') {
+					s1 = s1.substring(i, j+1);
+					one = s1.charAt(s1.indexOf(' ')+1);
+					System.out.println(one);
+					break;
+				}
+			}
+		}
+		
+		for(int i = 0; i < s2.length(); i++) {
+			for(int j = s2.length()-1; j > 0; j++) {
+				if(s2.charAt(i)!=' ' && s2.charAt(j)!=' ') {
+					s2 = s2.substring(i, j+1);
+					two = s2.charAt(s2.indexOf(' ')+1);
+					System.out.println(two);
+					break;
+				}
+			}
+		}
+		for(int i = 0; i < s3.length(); i++) {
+			for(int j = s3.length()-1; j > 0; j++) {
+				if(s3.charAt(i)!=' ' && s3.charAt(j)!=' ') {
+					s3 = s3.substring(i, j+1);
+					three = s3.charAt(s3.indexOf(' ')+1);
+					System.out.println(three+"\n");
+					break;
+				}
+			}
+		}
+		
+		if(one<two && one<three) {
+			System.out.println(s1);
+			return s1;
+		} 
+		if(two<one && two<three) {
+			System.out.println(s2);
+			return s2;
+		} 
+		if(three<one && three<two) {
+			System.out.println(s3);
+			return s3;
+		}
+
+		return "";
+		
 	}
 	
 	
