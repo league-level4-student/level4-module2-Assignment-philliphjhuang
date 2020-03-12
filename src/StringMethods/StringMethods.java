@@ -1,5 +1,6 @@
 package StringMethods;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -58,87 +59,85 @@ public class StringMethods {
 	// You cannot assume there are no extra spaces around the name, but you can
 	// assume there is only one space between the first and last name
 	public static String lineLeader(String s1, String s2, String s3) {
-		char one = ' ';
-		char two = ' ';
-		char three = ' ';
-		
 		s1 = s1.trim();
-		for(int i = 0; i < s1.length(); i++) {
-			for(int j = s1.length()-1; j > 0; j++) {
-				if(s1.charAt(i)!=' ' && s1.charAt(j)!=' ') {
-					s1 = s1.substring(i, j+1);
-					one = s1.charAt(s1.indexOf(' ')+1);
-					System.out.println(one);
-					break;
-				}
-			}
-		}
-		
-		for(int i = 0; i < s2.length(); i++) {
-			for(int j = s2.length()-1; j > 0; j++) {
-				if(s2.charAt(i)!=' ' && s2.charAt(j)!=' ') {
-					s2 = s2.substring(i, j+1);
-					two = s2.charAt(s2.indexOf(' ')+1);
-					System.out.println(two);
-					break;
-				}
-			}
-		}
-		for(int i = 0; i < s3.length(); i++) {
-			for(int j = s3.length()-1; j > 0; j++) {
-				if(s3.charAt(i)!=' ' && s3.charAt(j)!=' ') {
-					s3 = s3.substring(i, j+1);
-					three = s3.charAt(s3.indexOf(' ')+1);
-					System.out.println(three+"\n");
-					break;
-				}
-			}
-		}
-		
+		s2 = s2.trim();
+		s3 = s3.trim();
+		char one = s1.charAt(s1.indexOf(' ')+1);
+		char two = s2.charAt(s2.indexOf(' ')+1);
+		char three = s3.charAt(s3.indexOf(' ')+1);
 		if(one<two && one<three) {
-			System.out.println(s1);
 			return s1;
-		} 
-		if(two<one && two<three) {
-			System.out.println(s2);
+		} else if(two<one && two<three) {
 			return s2;
-		} 
-		if(three<one && three<two) {
-			System.out.println(s3);
-			return s3;
 		}
-
-		return "";
-		
+		return s3;
 	}
 	
 	
 	// Return the sum of all numerical digits in the String
 	public static int numeralSum(String s) {
-		return 0;
+		s = s.replaceAll("\\D", "");
+		int sum = 0;
+		for(int i = 0; i < s.length(); i++) {
+			int x = Integer.parseInt(s.substring(i,i+1));
+			sum += x;
+		}
+		return sum;
 	}
-	
 	
 	// Return the number of times String substring appears in String s
 	public static int substringCount(String s, String substring) {
-		return 0;
+		int count = 0;
+		int ssLength = substring.length();
+		for(int i = 0; i < s.length() - ssLength + 1; i++) {
+			if(s.substring(i,i+ssLength).equals(substring)) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	// Call Utitilities.encrypt to encrypt String s
 	public static String encrypt(String s, char key) {
-		return null;
+		byte[] a = new byte[s.length()];
+		for(int i = 0; i < s.length(); i++) {
+			a[i] = (byte) s.charAt(i);
+		}
+		String encrypted = Utilities.encrypt(a , (byte)key);
+		return encrypted;
 	}
 
 	// Call Utilities.decrypt to decrypt the cyphertext
 	public static String decrypt(String s, char key) {
-		return null;
+		String decrypted = Utilities.decrypt(s, (byte)key);
+		return decrypted;
 	}
 
 
 	// Return the number of words in String s that end with String substring
 	// You can assume there are no punctuation marks between words
 	public static int wordsEndsWithSubstring(String s, String substring) {
-		return 0;
+		int numOfSpace = 0;
+		int count = 0;
+		while(s.length()!=0) {
+			for(int i = 0; i < s.length(); i++) {
+				if(s.charAt(i)==' ') {
+					if(s.substring(i-substring.length(),i).equals(substring) && s.substring(i-substring.length(),i).length()>=substring.length()) {
+						System.out.println(s.substring(i-substring.length(),i));
+						count++;
+					}
+					break;
+				}
+			}
+			if(s.indexOf(' ')!=-1) {
+				s = s.substring(s.indexOf(' ')+1,s.length());
+			} else {
+				s = "";
+			}
+			System.out.println(s + " " + count);
+		}
+		
+		return count;
 	}
 	
 
