@@ -117,26 +117,27 @@ public class StringMethods {
 	// Return the number of words in String s that end with String substring
 	// You can assume there are no punctuation marks between words
 	public static int wordsEndsWithSubstring(String s, String substring) {
-		int numOfSpace = 0;
 		int count = 0;
-		while(s.length()!=0) {
+		while(s.length()>0) {
 			for(int i = 0; i < s.length(); i++) {
 				if(s.charAt(i)==' ') {
-					if(s.substring(i-substring.length(),i).equals(substring) && s.substring(i-substring.length(),i).length()>=substring.length()) {
-						System.out.println(s.substring(i-substring.length(),i));
-						count++;
+					if(i-substring.length()<0) {
+						break;
+					}
+					if(s.substring(i-substring.length(),i).equals(substring)) { 
+							count++;
+						
 					}
 					break;
 				}
 			}
 			if(s.indexOf(' ')!=-1) {
-				s = s.substring(s.indexOf(' ')+1,s.length());
+				s = s.substring(s.indexOf(' ') + 1, s.length());
 			} else {
 				s = "";
+				break;
 			}
-			System.out.println(s + " " + count);
 		}
-		
 		return count;
 	}
 	
@@ -145,7 +146,22 @@ public class StringMethods {
 	// of String substring and the final occurrence
 	// You can assume that substring will appear at least twice
 	public static int distance(String s, String substring) {
-		return 0;
+		int firstOccurIndex = 0;
+		int lastOccurIndex = 0;
+		for(int i = 0; i <= s.length()-substring.length(); i++) {
+			if(s.substring(i, i + substring.length()).equals(substring)) {
+				firstOccurIndex = i;
+				break;
+			}
+		}
+		
+		for(int i = s.length()-substring.length(); i >= 0; i--) {
+			if(s.substring(i, i + substring.length()).equals(substring)) {
+				lastOccurIndex = i;
+				break;
+			}
+		}
+		return lastOccurIndex - firstOccurIndex - substring.length();
 	}
 
 
@@ -153,7 +169,26 @@ public class StringMethods {
 	// palindromes are words or phrases are read the same forward as backward.
 	// HINT: ignore/remove all punctuation and spaces in the String
 	public static boolean palindrome(String s) {
-		return true;
+		String norm = "";
+		String reverse = "";
+		for(int i = 0; i < s.length(); i++) {
+			if((s.charAt(i)>=65 && s.charAt(i)<=90) || (s.charAt(i)>=97 && s.charAt(i)<=122)) {
+				norm = norm + s.charAt(i);
+			}
+		}
+		for(int i = s.length()-1; i >= 0; i--) {
+			if((s.charAt(i)>=65 && s.charAt(i)<=90) || (s.charAt(i)>=97 && s.charAt(i)<=122)) {
+				reverse = reverse + s.charAt(i);
+			}
+		}
+		norm = norm.toLowerCase();
+		reverse = reverse.toLowerCase();
+		System.out.println(norm);
+		System.out.println(reverse + "\n");
+		if(norm.equals(reverse)) {
+			return true;
+		}
+		return false;
 	}
 	
 }
